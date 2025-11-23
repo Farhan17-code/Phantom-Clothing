@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Nouka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+Bengali:wght@300;400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --terracotta: #8B1E1E;
+            --terracotta-light: #A52A2A;
+            --gold: #D4A017;
+            --gold-dark: #B8860B;
+            --ivory: #F5F0E1;
+            --burnt-orange: #CC5500;
+            --bottle-green: #1E352F;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #f8f8f8;
+            color: #2C1810;
+        }
+
+        /* Header */
+        header {
+            background: rgba(139, 30, 30, 0.95);
+            padding: 1rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(212, 160, 23, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--gold);
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+        }
+
+        .logo-text {
+            font-family: 'Noto Serif Bengali', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            color: var(--ivory);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-family: 'Cinzel', serif;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        /* Cart Container */
+        .cart-wrapper {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        /* Left Side - Cart Items */
+        .cart-section {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .select-all {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .select-all input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .delete-btn:hover {
+            color: var(--burnt-orange);
+        }
+
+        /* Vendor Section */
+        .vendor-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .vendor-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .vendor-header input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .vendor-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Cart Item */
+        .cart-item {
+            display: grid;
+            grid-template-columns: auto 120px 3fr 1fr 100px auto;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-checkbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .item-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .item-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .item-badge {
+            display: inline-block;
+            background: var(--burnt-orange);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0.3rem 0;
+        }
+
+        .item-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .item-timer {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
+
+        .item-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .current-price {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--burnt-orange);
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-top: 0.2rem;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #f5f5f5;
+            border-radius: 4px;
+            padding: 0.3rem;
+        }
+
+        .qty-btn {
+            background: white;
+            border: 1px solid #ddd;
+            width: 28px;
+            height: 28px;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #666;
+            transition: all 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: var(--terracotta);
+            color: white;
+            border-color: var(--terracotta);
+        }
+
+        .qty-value {
+            width: 40px;
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .action-icon {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .action-icon:hover {
+            color: var(--burnt-orange);
+        }
+
+        /* Right Side - Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            margin-bottom: 1.5rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid var(--gold);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--terracotta);
+        }
+
+        .voucher-section {
+            margin: 1.5rem 0;
+        }
+
+        .voucher-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .voucher-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .apply-btn {
+            background: #00b4d8;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: #0096c7;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--burnt-orange);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
+        .checkout-btn:hover {
+            background: #ff6600;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(204, 85, 0, 0.4);
+        }
+
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-cart-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .empty-cart-text {
+            font-size: 1.5rem;
+            color: var(--terracotta);
+            margin-bottom: 2rem;
+        }
+
+        .continue-shopping-btn {
+            background: var(--gold-dark);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            transition: all 0.3s;
+        }
+
+        .continue-shopping-btn:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            .cart-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .cart-item {
+                grid-template-columns: auto 80px 1fr;
+                gap: 1rem;
+            }
+
+            .item-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .item-price,
+            .item-quantity,
+            .item-actions {
+                grid-column: 3;
+            }
+
+            .item-quantity {
+                justify-content: flex-start;
+                margin-top: 0.5rem;
+            }
+        }
+
+        .firefly {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold), 0 0 20px var(--gold);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 9999;
+            animation: fireflyFloat 15s ease-in-out infinite;
+        }
+
+        @keyframes fireflyFloat {
+            0%, 100% { 
+                opacity: 0; 
+                transform: translate(0, 0);
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            50% { 
+                transform: translate(100vw, -50px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="firefly"></div>
+
+    <header>
+        <div class="logo" onclick="window.location.href='index.html'">
+            <div class="logo-icon">⛵</div>
+            <div class="logo-text">নৌকা · Nouka</div>
+        </div>
+        <nav>
+            <a href="index.html">Continue Shopping</a>
+        </nav>
+    </header>
+
+    <div class="cart-wrapper">
+        <div class="cart-section">
+            <div class="cart-header">
+                <label class="select-all">
+                    <input type="checkbox" id="selectAll" onchange="selectAllItems()">
+                    <span>SELECT ALL (<span id="totalItemCount">0</span> ITEM(S))</span>
+                </label>
+                <button class="delete-btn" onclick="deleteSelected()">
+                    🗑️ DELETE
+                </button>
+            </div>
+
+            <div id="cartItemsContainer">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <div class="order-summary">
+            <h2 class="summary-title">Order Summary</h2>
+            
+            <div class="summary-row">
+                <span>Subtotal (<span id="summaryItemCount">0</span> items)</span>
+                <span id="subtotalAmount">৳ 0</span>
+            </div>
+            
+            <div class="summary-row">
+                <span>Shipping Fee</span>
+                <span id="shippingFee">৳ 0</span>
+            </div>
+
+            <div class="voucher-section">
+                <div class="voucher-input-wrapper">
+                    <input type="text" class="voucher-input" placeholder="Enter Voucher Code">
+                    <button class="apply-btn">APPLY</button>
+                </div>
+            </div>
+
+            <div class="summary-row total">
+                <span>Total</span>
+                <span id="totalAmount">৳ 0</span>
+            </div>
+
+            <button class="checkout-btn" id="checkoutBtn" onclick="proceedToCheckout()">
+                PROCEED TO CHECKOUT (<span id="checkoutCount">0</span>)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        var selectedItems = [];
+        var allCartItems = [];
+
+        function parsePrice(priceStr) {
+            return parseInt(priceStr.replace('৳ ', '').replace(',', ''));
+        }
+
+        function formatPrice(price) {
+            return '৳ ' + price.toLocaleString();
+        }
+
+        function calculateTimer() {
+            var now = new Date();
+            var endOfDay = new Date();
+            endOfDay.setHours(23, 59, 59, 999);
+            var diff = endOfDay - now;
+            
+            var hours = Math.floor(diff / (1000 * 60 * 60));
+            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            return 'Ends at Nov 23 ' + 
+                   String(hours).padStart(2, '0') + ':' + 
+                   String(minutes).padStart(2, '0') + ':' + 
+                   String(seconds).padStart(2, '0');
+        }
+
+        function playBellSound() {
+            var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            var oscillator = audioContext.createOscillator();
+            var gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        function renderCart() {
+            var cart = JSON.parse(localStorage.getItem('noukaCart') || '[]');
+            allCartItems = cart;
+            var container = document.getElementById('cartItemsContainer');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">🛍️</div>
+                        <div class="empty-cart-text">Your cart is empty</div>
+                        <button class="continue-shopping-btn" onclick="window.location.href='index.html'">
+                            Start Shopping
+                        </button>
+                    </div>
+                `;
+                updateSummary();
+                return;
+            }
+
+            // Group items by vendor (for demo, using "Nouka Mart")
+            var vendorHtml = `
+                <div class="vendor-section">
+                    <div class="vendor-header">
+                        <input type="checkbox" id="vendorCheckbox" onchange="selectVendorItems(this)">
+                        <div class="vendor-name">
+                            🏪 Nouka Mart →
+                        </div>
+                    </div>
+            `;
+
+            cart.forEach(function(item, index) {
+                var originalPrice = parsePrice(item.price);
+                var discountedPrice = Math.floor(originalPrice * 0.85); // 15% discount for display
+                
+                vendorHtml += `
+                    <div class="cart-item" data-index="${index}">
+                        <div class="item-checkbox">
+                            <input type="checkbox" class="item-select" data-index="${index}" onchange="updateSelection()">
+                        </div>
+                        
+                        <img src="${item.image}" alt="${item.name}" class="item-image">
+                        
+                        <div class="item-details">
+                            <span class="item-badge">FLASH DEAL</span>
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-meta">${item.artisan}</div>
+                            <div class="item-timer">${calculateTimer()}</div>
+                        </div>
+                        
+                        <div class="item-price">
+                            <div class="current-price">${formatPrice(discountedPrice)}</div>
+                            <div class="original-price">${item.price}</div>
+                        </div>
+                        
+                        <div class="item-quantity">
+                            <button class="qty-btn" onclick="updateQuantity(${index}, -1)">−</button>
+                            <span class="qty-value" id="qty-${index}">1</span>
+                            <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                        </div>
+                        
+                        <div class="item-actions">
+                            <button class="action-icon" onclick="toggleFavorite(${index})" title="Add to Wishlist">♡</button>
+                            <button class="action-icon" onclick="removeItem(${index})" title="Remove">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            vendorHtml += '</div>';
+            container.innerHTML = vendorHtml;
+
+            document.getElementById('totalItemCount').textContent = cart.length;
+            updateSummary();
+            updateTimer();
+        }
+
+        function updateTimer() {
+            setInterval(function() {
+                var timers = document.querySelectorAll('.item-timer');
+                timers.forEach(function(timer) {
+                    timer.textContent = calculateTimer();
+                });
+            }, 1000);
+        }
+
+        function selectAllItems() {
+            var selectAll = document.getElementById('selectAll');
+            var checkboxes = document.querySelectorAll('.item-select');
+            
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = selectAll.checked;
+            });
+            
+            updateSelection();
+        }
+
+        function selectVendorItems(vendorCheckbox) {
+            var checkboxes = document.querySelectorAll('.item-select');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = vendorCheckbox.checked;
+            });
+            
+            document.getElementById('selectAll').checked = vendorCheckbox.checked;
+            updateSelection();
+        }
+
+        function updateSelection() {
+            selectedItems = [];
+            var checkboxes = document.querySelectorAll('.item-select:checked');
+            
+            checkboxes.forEach(function(checkbox) {
+                var index = parseInt(checkbox.dataset.index);
+                selectedItems.push(index);
+            });
+
+            // Update select all checkbox
+            var totalCheckboxes = document.querySelectorAll('.item-select').length;
+            document.getElementById('selectAll').checked = selectedItems.length === totalCheckboxes && totalCheckboxes > 0;
+
+            updateSummary();
+        }
+
+        function updateQuantity(index, change) {
+            var qtyElement = document.getElementById('qty-' + index);
+            var currentQty = parseInt(qtyElement.textContent);
+            var newQty = Math.max(1, currentQty + change);
+            
+            qtyElement.textContent = newQty;
+            
+            // Update in localStorage (if needed for persistence)
+            // For now, just update display
+            updateSummary();
+        }
+
+        function removeItem(index) {
+            playBellSound();
+            
+            var cart = JSON.parse(localStorage.getItem('noukaCart') || '[]');
+            cart.splice(index, 1);
+            localStorage.setItem('noukaCart', JSON.stringify(cart));
+            
+            renderCart();
+        }
+
+        function toggleFavorite(index) {
+            playBellSound();
+            alert('Added to wishlist! (Feature coming soon)');
+        }
+
+        function deleteSelected() {
+            if (selectedItems.length === 0) {
+                alert('Please select items to delete');
+                return;
+            }
+
+            if (confirm('Delete ' + selectedItems.length + ' selected item(s)?')) {
+                playBellSound();
+                
+                var cart = JSON.parse(localStorage.getItem('noukaCart') || '[]');
+                
+                // Remove selected items (in reverse order to maintain indices)
+                selectedItems.sort(function(a, b) { return b - a; });
+                selectedItems.forEach(function(index) {
+                    cart.splice(index, 1);
+                });
+                
+                localStorage.setItem('noukaCart', JSON.stringify(cart));
+                selectedItems = [];
+                renderCart();
+            }
+        }
+
+        function updateSummary() {
+            var cart = JSON.parse(localStorage.getItem('noukaCart') || '[]');
+            var selectedCount = selectedItems.length;
+            var subtotal = 0;
+
+            if (selectedCount > 0) {
+                selectedItems.forEach(function(index) {
+                    if (cart[index]) {
+                        var price = parsePrice(cart[index].price);
+                        var discountedPrice = Math.floor(price * 0.85);
+                        var qty = parseInt(document.getElementById('qty-' + index).textContent);
+                        subtotal += discountedPrice * qty;
+                    }
+                });
+            }
+
+            var shipping = selectedCount > 0 ? 100 : 0;
+            var total = subtotal + shipping;
+
+            document.getElementById('summaryItemCount').textContent = selectedCount;
+            document.getElementById('subtotalAmount').textContent = formatPrice(subtotal);
+            document.getElementById('shippingFee').textContent = formatPrice(shipping);
+            document.getElementById('totalAmount').textContent = formatPrice(total);
+            document.getElementById('checkoutCount').textContent = selectedCount;
+
+            var checkoutBtn = document.getElementById('checkoutBtn');
+            checkoutBtn.disabled = selectedCount === 0;
+        }
+
+        function proceedToCheckout() {
+            if (selectedItems.length === 0) {
+                alert('Please select items to checkout');
+                return;
+            }
+
+            playBellSound();
+            
+            // Filter cart to only include selected items
+            var cart = JSON.parse(localStorage.getItem('noukaCart') || '[]');
+            var checkoutItems = selectedItems.map(index => cart[index]);
+            
+            // Save checkout items temporarily
+            localStorage.setItem('noukaCart', JSON.stringify(checkoutItems));
+            
+            window.location.href = 'checkout.html';
+        }
+
+        // Firefly animation
+        var idleTimer;
+        var fireflyActive = false;
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(function() {
+                if (!fireflyActive) {
+                    animateFirefly();
+                }
+            }, 8000);
+        }
+
+        function animateFirefly() {
+            var firefly = document.querySelector('.firefly');
+            fireflyActive = true;
+            firefly.style.top = Math.random() * 100 + 'px';
+            firefly.style.animation = 'none';
+            
+            setTimeout(function() {
+                firefly.style.animation = 'fireflyFloat 15s ease-in-out forwards';
+            }, 10);
+
+            setTimeout(function() {
+                fireflyActive = false;
+            }, 15000);
+        }
+
+        document.addEventListener('mousemove', resetIdleTimer);
+        document.addEventListener('scroll', resetIdleTimer);
+        resetIdleTimer();
+
+        // Initialize cart on page load
+        window.addEventListener('load', function() {
+            renderCart();
+        });
+    </script>
+</body>
+</html>
