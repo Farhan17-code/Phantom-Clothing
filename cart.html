@@ -222,7 +222,7 @@
 
         .item-timer {
             font-size: 0.85rem;
-            color: #999;
+            color: #ef0101;
             margin-top: 0.3rem;
         }
 
@@ -232,16 +232,10 @@
             align-items: flex-end;
         }
 
-        .current-price {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--burnt-orange);
-        }
 
         .original-price {
-            font-size: 0.9rem;
-            color: #999;
-            text-decoration: line-through;
+            font-size: 1.4rem;
+            color: #f6c00e;
             margin-top: 0.2rem;
         }
 
@@ -551,12 +545,9 @@
                 margin-top: 0.5rem;
             }
 
-            .current-price {
-                font-size: 1.1rem;
-            }
 
             .original-price {
-                font-size: 0.8rem;
+                font-size: 1.4rem;
             }
 
             .item-quantity {
@@ -744,7 +735,7 @@
         }
 
         function formatPrice(price) {
-            return '৳ ' + price.toLocaleString();
+            return ' ' + price.toLocaleString();
         }
 
         function calculateTimer() {
@@ -813,7 +804,6 @@
 
             cart.forEach(function(item, index) {
                 var originalPrice = parsePrice(item.price);
-                var discountedPrice = Math.floor(originalPrice * 0.85); // 15% discount for display
                 
                 vendorHtml += `
                     <div class="cart-item" data-index="${index}">
@@ -831,8 +821,7 @@
                         </div>
                         
                         <div class="item-price">
-                            <div class="current-price">${formatPrice(discountedPrice)}</div>
-                            <div class="original-price">${item.price}</div>
+                            <div class="original-price">${formatPrice(item.price)}</div>
                         </div>
                         
                         <div class="item-quantity">
@@ -1039,3 +1028,4 @@
     </script>
 </body>
 </html>
+
