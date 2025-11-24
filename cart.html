@@ -232,7 +232,6 @@
             align-items: flex-end;
         }
 
-
         .original-price {
             font-size: 1.4rem;
             color: #f6c00e;
@@ -545,9 +544,8 @@
                 margin-top: 0.5rem;
             }
 
-
             .original-price {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
 
             .item-quantity {
@@ -555,6 +553,7 @@
                 justify-content: flex-start;
                 margin-top: 0.5rem;
                 padding: 0.2rem;
+                justify-content: center;
             }
 
             .qty-btn {
@@ -814,7 +813,6 @@
                         <img src="${item.image}" alt="${item.name}" class="item-image">
                         
                         <div class="item-details">
-                            <span class="item-badge">FLASH DEAL</span>
                             <div class="item-name">${item.name}</div>
                             <div class="item-meta">${item.artisan}</div>
                             <div class="item-timer">${calculateTimer()}</div>
@@ -949,12 +947,13 @@
 
             if (selectedCount > 0) {
                 selectedItems.forEach(function(index) {
-                    if (cart[index]) {
-                        var price = parsePrice(cart[index].price);
-                        var discountedPrice = Math.floor(price * 0.85);
-                        var qty = parseInt(document.getElementById('qty-' + index).textContent);
-                        subtotal += discountedPrice * qty;
-                    }
+                        if (cart[index]) {
+                            var price = parsePrice(cart[index].price);
+                            // No discount applied — use full price
+                            var discountedPrice = price;
+                            var qty = parseInt(document.getElementById('qty-' + index).textContent);
+                            subtotal += discountedPrice * qty;
+                        }
                 });
             }
 
@@ -1028,4 +1027,3 @@
     </script>
 </body>
 </html>
-
