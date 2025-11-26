@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom Clothing | Fashion Heritage</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+Bengali:wght@300;400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --terracotta: #ffffff;
+            --terracotta-light: #000000;
+            --gold: #D4A017;
+            --gold-dark: #b80b0b;
+            --ivory: #000000;
+            --burnt-orange: #CC5500;
+            --bottle-green: #51d2b0;
+            --indigo: #3E4E7A;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-image: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: rgb(42, 41, 41);;
+            color: #2C1810;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 30, 30, 0.02) 2px, rgba(139, 30, 30, 0.02) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(212, 160, 23, 0.02) 2px, rgba(212, 160, 23, 0.02) 4px);
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgb(0, 0, 0);
+            backdrop-filter: blur(10px);
+            padding: 1rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(212, 160, 23, 0.3);
+        }
+
+        header.scrolled {
+            background: rgba(12, 12, 12, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            animation: gentleBob 4s ease-in-out infinite;
+        }
+
+        @keyframes gentleBob {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-5px) rotate(2deg);
+            }
+        }
+
+        .logo-text {
+            font-family: 'Noto Serif Bengali', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+            font-family: 'Cinzel', serif;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--gold);
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--invory);
+            color: rgb(255, 255, 255);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Firefly Animation */
+        .firefly {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white, 0 0 20px white;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 9999;
+            animation: fireflyFloat 15s ease-in-out infinite;
+        }
+
+        @keyframes fireflyFloat {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: translate(0, 0);
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translate(100vw, -50px);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 0;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) sepia(0.3);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(0, 0, 0)
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: var(--ivory);
+            animation: fadeInUp 2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Noto Serif Bengali', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            color:#ffffff;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color:#ffffff;
+        }
+
+        .hero-tagline {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .hero-cta {
+            background: var(--black);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: 2px solid var(--ivory);
+            font-size: 1.2rem;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: all 0.4s;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            animation: subtleGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes subtleGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+            }
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--invory);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            opacity: 0.3;
+        }
+
+        .hero-cta:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.949);
+        }
+
+        .hero-cta span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Progress River */
+        .progress-river {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(212, 160, 23, 0.2);
+            z-index: 999;
+        }
+
+
+        /* Products Section */
+        .products-section {
+            position: relative;
+            z-index: 2;
+            padding: 5rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            color: initial;
+            color: rgb(255, 255, 255);
+            margin-bottom: 3rem;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 3px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .product-card {
+            background: rgb(24, 24, 24);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(139, 30, 30, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            opacity: 0;
+            animation: cardFadeIn 0.6s ease forwards;
+        }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .product-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .product-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .product-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .product-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .product-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(180deg, transparent, rgba(212, 160, 23, 0.1));
+            transition: height 0.4s;
+            z-index: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--gold-dark);
+        }
+
+        .product-card:hover::before {
+            height: 100%;
+        }
+
+        .product-image-container {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+
+        .scarcity-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--burnt-orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-style: italic;
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-category {
+            color: var(--gold-dark);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            margin-bottom: 0.5rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .product-artisan {
+            font-size: 0.95rem;
+            color: var(--bottle-green);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            margin-bottom: 1rem;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 0.8rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s;
+        }
+
+        .product-card:hover .product-buttons {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .add-to-cart,
+        .buy-now {
+            background-image: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: rgb(0, 0, 0);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            flex: 1;
+            font-size: 1rem;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .buy-now {
+             background-image: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: rgb(0, 0, 0);
+            border: 2px solid var(--invory);
+        }
+
+        .buy-now a {
+            color: white;
+            text-decoration: none;
+            list-style: none;
+
+        }
+
+        .buy-now a:hover {
+             background-image: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: rgb(49, 201, 102);
+            text-decoration: none;
+            list-style: none;
+
+        }
+
+        .add-to-cart:hover {
+             background-image: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: rgb(24, 158, 188);
+            box-shadow: 0 5px 15px rgba(139, 30, 30, 0.4);
+        }
+
+        .buy-now:hover {
+             background-image: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: rgb(49, 201, 102);
+            box-shadow: 0 5px 15px rgba(212, 160, 23, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Ambient Video Section */
+        .ambient-section {
+            margin: 5rem 0;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ambient-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.2) brightness(0.9);
+        }
+
+        .ambient-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Noto Serif Bengali', serif;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            z-index: 10;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--terracotta);
+            color: var(--ivory);
+            padding: 4rem 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(212, 160, 23, 0.05) 10px,
+                    rgba(212, 160, 23, 0.05) 20px);
+            pointer-events: none;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section h3 {
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--ivory);
+            line-height: 1.8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+
+        .artisan-counter {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            animation: countUp 3s ease-out;
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(212, 160, 23, 0.3);
+            padding-top: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sound Control */
+        .sound-control {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background-image: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-repeat: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: rgb(111, 109, 109);
+            color: var(--ivory);
+            border: 2px solid var(--ivory);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(6, 6, 6, 0.3);
+        }
+
+        .sound-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-text {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .products-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            footer {
+                padding: 3rem 1.5rem 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Bird animation for cart add */
+        .flying-bird {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: flyToCart 1.5s ease-out forwards;
+        }
+
+        @keyframes flyToCart {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(calc(100vw - 200px), -500px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Firefly -->
+    <div class="firefly"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="logo">
+            <div class="logo-icon"><img src="logo.png" alt="Phantom Clothing Logo" width="65"></div>
+            <div class="logo-text">Phantom Clothing</div>
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#new">New Arrivals</a>
+            <a href="#story">Story</a>
+        </nav>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source
+                src="https://assets.mixkit.co/videos/preview/mixkit-woman-in-traditional-clothing-walking-in-nature-50572-large.mp4"
+                type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Find Your Signature Style</h1>
+            <p class="hero-subtitle">Handcrafted by expert Artisans</p>
+            <p class="hero-tagline">Across the Rivers of Bangladesh</p>
+            <button class="hero-cta" onclick="scrollToProducts()">
+                <span>Explore New Arrivals</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="shop">
+        <h2 class="section-title">Signature Collection</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically inserted -->
+        </div>
+    </section>
+
+    <!-- Ambient Section -->
+    <div class="ambient-section">
+        <video class="ambient-video" autoplay muted loop playsinline>
+            <source
+                src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-potter-shaping-clay-on-a-wheel-34487-large.mp4"
+                type="video/mp4">
+        </video>
+        <div class="ambient-overlay">You were born to stand out, not to fit in</div>
+    </div>
+
+    <!-- More Products -->
+    <section class="products-section">
+        <div class="products-grid" id="productsGrid2">
+            <!-- More products -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Phantom Clothing</h3>
+                <p>Crafting Fashion since 2025</p>
+                <div class="artisan-counter" id="artisanCounter">85,000</div>
+                <p style="color: var(--gold); font-style: italic;">Artisans creating magic</p>
+            </div>
+            <div class="footer-section">
+                <h3>Collections</h3>
+                <a href="#">Jamdani Sarees</a>
+                <a href="#">Hand-woven Panjabis</a>
+                <a href="#">Nakshi Kantha</a>
+                <a href="#">Terracotta Art</a>
+                <a href="#">Home & Living</a>
+            </div>
+            <div class="footer-section">
+                <h3>Our Story</h3>
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Refund Policy</a>
+                <a href="#">Return Policy</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">support@nouka.com</a>
+                <a href="#">+880 1700-000000</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Phantom Clothing · Fashion Heritage · All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- Sound Control -->
+    <div class="sound-control" onclick="toggleSound()" id="soundBtn">
+        🔇
+    </div>
+
+    <!-- Hidden Audio -->
+    <audio id="bgMusic" loop>
+        <source src="https://files.catbox.moe/5y436a.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        var products = [
+            {
+                id: 1,
+                name: 'Red Jamdani Saree',
+                category: 'Sarees',
+                price: '৳ 18,500',
+                artisan: 'Woven by Fatema, Dhaka',
+                image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&h=600&fit=crop',
+                scarcity: 'Only 3 left'
+            },
+            {
+                id: 2,
+                name: 'Hand-painted Terracotta Vase',
+                category: 'Home Decor',
+                price: '৳ 2,800',
+                artisan: 'Crafted by Rahim, Bogura',
+                image: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&h=600&fit=crop',
+                scarcity: 'Only 5 left'
+            },
+            {
+                id: 3,
+                name: 'Golden Nakshi Kantha',
+                category: 'Textiles',
+                price: '৳ 6,500',
+                artisan: 'Stitched by Ayesha, Rajshahi',
+                image: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=500&h=600&fit=crop',
+                scarcity: null
+            },
+            {
+                id: 4,
+                name: 'Indigo Cotton Panjabi',
+                category: 'Menswear',
+                price: '৳ 4,200',
+                artisan: 'Dyed by Karim, Kushtia',
+                image: 'https://images.unsplash.com/photo-1622539437287-594d37f91b3d?w=500&h=600&fit=crop',
+                scarcity: 'Only 2 left'
+            },
+            {
+                id: 5,
+                name: 'Brass Decorative Plate',
+                category: 'Home Decor',
+                price: '৳ 3,600',
+                artisan: 'Engraved by Jalal, Dhaka',
+                image: 'https://images.unsplash.com/photo-1582582621959-48d27397dc69?w=500&h=600&fit=crop',
+                scarcity: null
+            },
+            {
+                id: 6,
+                name: 'Mustard Silk Dupatta',
+                category: 'Accessories',
+                price: '৳ 5,800',
+                artisan: 'Woven by Shapla, Tangail',
+                image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=500&h=600&fit=crop',
+                scarcity: 'Only 4 left'
+            }
+        ];
+
+        var cartCount = 0;
+        var isSoundOn = false;
+
+        function renderProducts(productArray, containerId) {
+            var container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            for (var i = 0; i < productArray.length; i++) {
+                var product = productArray[i];
+                var scarcityBadge = product.scarcity ?
+                    '<div class="scarcity-badge">' + product.scarcity + '</div>' : '';
+
+                var card = '<div class="product-card">' +
+                    '<div class="product-image-container">' +
+                    scarcityBadge +
+                    '<img src="' + product.image + '" alt="' + product.name + '" class="product-image">' +
+                    '</div>' +
+                    '<div class="product-info">' +
+                    '<div class="product-category">' + product.category + '</div>' +
+                    '<div class="product-name">' + product.name + '</div>' +
+                    '<div class="product-artisan">' + product.artisan + '</div>' +
+                    '<div class="product-price">' + product.price + '</div>' +
+                    '<div class="product-buttons">' +
+                    '<button class="add-to-cart" onclick="addToCart(' + product.id + ', event)">Add to Cart</button>' +
+                    '<button class="buy-now" onclick="buyNow(' + product.id + ', event)"><a href="/">Buy Now</a></button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+
+                container.innerHTML += card;
+            }
+        }
+
+        function addToCart(productId, event) {
+            cartCount++;
+            document.getElementById('cartCount').textContent = cartCount;
+
+            // Play bell sound (simulated with beep)
+            playBellSound();
+
+            // Create flying bird animation
+            var bird = document.createElement('div');
+            bird.className = 'flying-bird';
+            bird.innerHTML = '🕊️';
+            bird.style.left = event.clientX + 'px';
+            bird.style.top = event.clientY + 'px';
+            document.body.appendChild(bird);
+
+            setTimeout(function () {
+                bird.remove();
+            }, 1500);
+
+            // Show confirmation
+            alert('Added to cart! Continue shopping or checkout when ready.');
+        }
+
+        function buyNow(productId, event) {
+            // Play bell sound
+            playBellSound();
+
+            // Add to cart first
+            cartCount++;
+            document.getElementById('cartCount').textContent = cartCount;
+
+            // Create flying bird animation
+            var bird = document.createElement('div');
+            bird.className = 'flying-bird';
+            bird.innerHTML = '🕊️';
+            bird.style.left = event.clientX + 'px';
+            bird.style.top = event.clientY + 'px';
+            document.body.appendChild(bird);
+
+            setTimeout(function () {
+                bird.remove();
+            }, 1500);
+
+            // Simulate immediate checkout
+            setTimeout(function () {
+                alert('Proceeding to checkout...\n\nProduct ID: ' + productId + '\n\nCheckout page coming soon!');
+            }, 800);
+        }
+
+        function playBellSound() {
+            var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            var oscillator = audioContext.createOscillator();
+            var gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        function toggleCart() {
+            alert('Cart: ' + cartCount + ' items\n\nFull cart functionality coming soon!');
+        }
+
+        function toggleSound() {
+            var audio = document.getElementById('bgMusic');
+            var btn = document.getElementById('soundBtn');
+
+            if (isSoundOn) {
+                audio.pause();
+                btn.innerHTML = '🔇';
+                isSoundOn = false;
+            } else {
+                audio.play();
+                audio.volume = 0.15;
+                btn.innerHTML = '🔊';
+                isSoundOn = true;
+            }
+        }
+
+        function scrollToProducts() {
+            document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll progress
+        window.addEventListener('scroll', function () {
+            var header = document.getElementById('header');
+            var scrolled = window.scrollY;
+
+            if (scrolled > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Firefly animation trigger after 8 seconds of idle
+        var idleTimer;
+        var fireflyActive = false;
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(function () {
+                if (!fireflyActive) {
+                    animateFirefly();
+                }
+            }, 8000);
+        }
+
+        function animateFirefly() {
+            var firefly = document.querySelector('.firefly');
+            fireflyActive = true;
+            firefly.style.top = Math.random() * 100 + 'px';
+            firefly.style.animation = 'none';
+
+            setTimeout(function () {
+                firefly.style.animation = 'fireflyFloat 15s ease-in-out forwards';
+            }, 10);
+
+            setTimeout(function () {
+                fireflyActive = false;
+            }, 15000);
+        }
+
+        document.addEventListener('mousemove', resetIdleTimer);
+        document.addEventListener('scroll', resetIdleTimer);
+        resetIdleTimer();
+
+        // Artisan counter animation
+        function animateCounter() {
+            var counter = document.getElementById('artisanCounter');
+            var target = 85000;
+            var current = 0;
+            var increment = target / 100;
+
+            var timer = setInterval(function () {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                counter.textContent = Math.floor(current).toLocaleString();
+            }, 30);
+        }
+
+        // Intersection Observer for counter
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    animateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        window.addEventListener('load', function () {
+            var counter = document.getElementById('artisanCounter');
+            if (counter) {
+                observer.observe(counter);
+            }
+        });
+
+        // Initialize products
+        renderProducts(products, 'productsGrid');
+
+        // Create more products for second grid
+        var moreProducts = [
+            {
+                id: 7,
+                name: 'Copper Serving Bowl',
+                category: 'Kitchenware',
+                price: '৳ 2,400',
+                artisan: 'Hammered by Sumon, Chittagong',
+                image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&h=600&fit=crop',
+                scarcity: null
+            },
+            {
+                id: 8,
+                name: 'Emerald Green Saree',
+                category: 'Sarees',
+                price: '৳ 22,000',
+                artisan: 'Woven by Rehana, Comilla',
+                image: 'https://images.unsplash.com/photo-1583391733981-5afa08e07eb7?w=500&h=600&fit=crop',
+                scarcity: 'Only 2 left'
+            },
+            {
+                id: 9,
+                name: 'Handwoven Jute Basket',
+                category: 'Home Decor',
+                price: '৳ 1,800',
+                artisan: 'Crafted by Mina, Sylhet',
+                image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&h=600&fit=crop',
+                scarcity: null
+            },
+            {
+                id: 10,
+                name: 'Traditional Pati Mat',
+                category: 'Home & Living',
+                price: '৳ 3,200',
+                artisan: 'Woven by Jamila, Faridpur',
+                image: 'https://images.unsplash.com/photo-1615529328331-f8917597711f?w=500&h=600&fit=crop',
+                scarcity: 'Only 6 left'
+            },
+            {
+                id: 11,
+                name: 'Ivory Cotton Kurta',
+                category: 'Menswear',
+                price: '৳ 3,800',
+                artisan: 'Tailored by Kamal, Dhaka',
+                image: 'https://images.unsplash.com/photo-1626497764746-6dc36546d816?w=500&h=600&fit=crop',
+                scarcity: null
+            },
+            {
+                id: 12,
+                name: 'Painted Clay Diya Set',
+                category: 'Decor',
+                price: '৳ 1,200',
+                artisan: 'Molded by Ruma, Rajshahi',
+                image: 'https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=500&h=600&fit=crop',
+                scarcity: 'Only 8 left'
+            }
+        ];
+
+        renderProducts(moreProducts, 'productsGrid2');
+
+        // Auto-play subtle background music hint after 3 seconds
+        setTimeout(function () {
+            var soundBtn = document.getElementById('soundBtn');
+            soundBtn.style.animation = 'pulse 2s ease-in-out 3';
+        }, 3000);
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
