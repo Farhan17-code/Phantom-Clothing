@@ -1029,26 +1029,94 @@
             }
         }
 
-        function addToCart(productId, event) {
-            cartCount++;
-            document.getElementById('cartCount').textContent = cartCount;
-
-            // Play bell sound (simulated with beep)
-            playBellSound();
-
-            // Create flying bird animation
-            var bird = document.createElement('div');
-            bird.className = 'flying-bird';
-            bird.innerHTML = '🕊️';
-            bird.style.left = event.clientX + 'px';
-            bird.style.top = event.clientY + 'px';
-            document.body.appendChild(bird);
-
-            setTimeout(function () {
-                bird.remove();
-            }, 1500);
-
+       function addToCart(productId, event) {
+    // Find the product
+    var product = null;
+    products.forEach(function(p) {
+        if (p.id === productId) product = p;
+    });
+    
+    if (!product) {
+        moreProducts.forEach(function(p) {
+            if (p.id === productId) product = p;
+        });
+    }
+    
+    if (!product) return;
+    
+    // Get existing cart
+    var cart = JSON.parse(localStorage.getItem('phantomCart') || '[]');
+    
+    // Check if product already in cart
+    var existingIndex = -1;
+    cart.forEach(function(item, index) {
+        if (item.id === productId) {
+            existingIndex = index;
         }
+    });
+    
+    if (existingIndex >= 0) {
+        // Increase quantity
+        cart[existingIndex].quantity += 1;
+    } else {
+        // Add new item
+        cart.push({
+            id: product.id,
+            name: product.name,
+            category: product.category,
+            price: product.price,
+            artisan: product.artisan,
+            image: product.image,
+            quantity: 1
+        });
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('phantomCart', JSON.stringify(cart));
+    
+    // Update cart count
+    updateCartCount();
+    
+    // Play bell sound
+    playBellSound();
+    
+    // Create flying bird animation
+    var bird = document.createElement('div');
+    bird.className = 'flying-bird';
+    bird.innerHTML = '🕊️';
+    bird.style.left = event.clientX + 'px';
+    bird.style.top = event.clientY + 'px';
+    document.body.appendChild(bird);
+    
+    setTimeout(function () {
+        bird.remove();
+    }, 1500);
+    
+    // Show confirmation
+    alert('Added to cart! Continue shopping or view cart.');
+}
+
+// Update cart count function
+function updateCartCount() {
+    var cart = JSON.parse(localStorage.getItem('phantomCart') || '[]');
+    var count = 0;
+    
+    cart.forEach(function(item) {
+        count += item.quantity;
+    });
+    
+    document.getElementById('cartCount').textContent = count;
+}
+
+// Update toggleCart function to go to cart page
+function toggleCart() {
+    window.location.href = 'cart.html';
+}
+
+// Load cart count on page load
+window.addEventListener('load', function() {
+    updateCartCount();
+}); 
 
            
         function buyNow(productId, event) {
@@ -1277,6 +1345,7 @@
 
 
 </html>
+
 
 
 
