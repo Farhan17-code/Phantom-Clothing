@@ -155,6 +155,7 @@
             color: white;
             margin-bottom: 0.5rem;
             letter-spacing: 3px;
+            margin-top: 75px;
         }
 
         .cart-subtitle {
@@ -469,12 +470,29 @@
                 display: none;
             }
         }
+
+        .logo-icon {
+            animation: gentleBob 3s ease-in-out infinite;
+        }
+
+        @keyframes gentleBob {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-5px) rotate(2deg);
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
         <a href="/" class="logo">
+            <div class="logo-icon"><img src="logo.png" width="40"></div>
             <div class="logo-text">Phantom Clothing</div>
         </a>
         <nav>
@@ -676,3 +694,4 @@
     </script>
 </body>
 </html>
+
