@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | Phantom Clothing</title>
+    <link rel="shortcut icon" href="weblogo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+Bengali:wght@300;400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --terracotta: #ffffff;
+            --gold: #D4A017;
+            --gold-dark: #b80b0b;
+            --ivory: #000000;
+            --bottle-green: #51d2b0;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: rgb(42, 41, 41);
+            color: #2C1810;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 30, 30, 0.02) 2px, rgba(139, 30, 30, 0.02) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(212, 160, 23, 0.02) 2px, rgba(212, 160, 23, 0.02) 4px);
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgb(0, 0, 0);
+            backdrop-filter: blur(10px);
+            padding: 1rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 160, 23, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Noto Serif Bengali', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s;
+            font-family: 'Cinzel', serif;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .logo-icon {
+            animation: gentleBob 3s ease-in-out infinite;
+        }
+
+        @keyframes gentleBob {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(2deg);
+            }
+        }
+
+        /* Story Container */
+        .story-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+            min-height: 100vh;
+        }
+
+        .story-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out;
+            margin-top: 60px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .story-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+
+        .story-subtitle {
+            color: var(--gold);
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .divider {
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 2rem auto;
+        }
+
+        /* Story Content */
+        .story-content {
+            background: rgba(24, 24, 24, 0.95);
+            border-radius: 15px;
+            padding: 3rem;
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .story-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(212, 160, 23, 0.2);
+        }
+
+        .story-intro h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .story-intro .greeting {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .story-section {
+            margin-bottom: 3rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .story-section h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--bottle-green);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .story-section h3::before {
+            content: '✦';
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        .story-section p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            text-indent: 2rem;
+        }
+
+        .highlight-box {
+            background: rgba(212, 160, 23, 0.1);
+            border-left: 4px solid var(--gold);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box p {
+            text-indent: 0;
+            font-size: 1.3rem;
+            color: white;
+            font-style: italic;
+        }
+
+        /* Values Section */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .value-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 160, 23, 0.3);
+        }
+
+        .value-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h4 {
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.6;
+            text-indent: 0;
+            text-align: center;
+        }
+
+        /* Closing Section */
+        .closing-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-top: 3rem;
+        }
+
+        .closing-section h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .closing-section p {
+            color: white;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            text-indent: 0;
+        }
+
+        .signature {
+            margin-top: 2rem;
+            font-family: 'Cinzel', serif;
+            color: var(--bottle-green);
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1.2rem 3rem;
+            background: var(--gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: var(--gold-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 160, 23, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .story-container {
+                padding: 6rem 1.5rem 2rem;
+            }
+
+            .story-title {
+                font-size: 2rem;
+            }
+
+            .story-subtitle {
+                font-size: 1.1rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .story-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .story-section p {
+                font-size: 1.1rem;
+                text-align: left;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 1.5rem;
+            }
+
+            .story-intro h2 {
+                font-size: 1.5rem;
+            }
+
+            .story-section h3 {
+                font-size: 1.4rem;
+            }
+
+            .story-content {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="/" class="logo">
+            <div class="logo-icon"><img src="logo.png" width="50"></div>
+            <div class="logo-text">Phantom Clothing</div>
+        </a>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/#shop">Shop</a>
+            <a href="/#new">New Arrivals</a>
+        </nav>
+    </header>
+
+    <!-- Story Container -->
+    <div class="story-container">
+        <div class="story-header">
+            <h1 class="story-title">The Story of a College Guy</h1>
+            <div class="divider"></div>
+            <p class="story-subtitle">Discover the journey behind the brand</p>
+        </div>
+
+        <div class="story-content">
+            <!-- Introduction -->
+            <div class="story-intro">
+                <h2>Meet Farhan</h2>
+                <p class="greeting">Hi, my name is Farhan. I am a college guy with a passion for founding a brand that combines style and sustainability.</p>
+            </div>
+
+            <!-- The Beginning -->
+            <div class="story-section">
+                <h3>The Beginning</h3>
+                <p>As a student, I understand the importance of affordable fashion that doesn't compromise on quality or ethics. That's why I started Phantom Clothing, a brand dedicated to providing trendy and eco-friendly clothing options for young people like me.</p>
+                <p>The journey began in my college dorm room, sketching designs late at night while balancing classes and exams. I saw my peers struggling to find fashion that reflected their values without breaking their budgets, and I knew something had to change.</p>
+            </div>
+
+            <!-- Our Values -->
+            <div class="story-section">
+                <h3>Our Values</h3>
+                <div class="highlight-box">
+                    <p>"Fashion should be more than just a trend — it should be a statement of values."</p>
+                </div>
+                <p>At Phantom Clothing, we believe that fashion should be more than just a trend - it should be a statement of values. That's why we use sustainable materials and ethical manufacturing practices to create our clothing. Our designs are inspired by the latest fashion trends, but we also prioritize comfort and durability, so our customers can feel good about what they wear.</p>
+            </div>
+
+            <!-- Core Principles -->
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="icon">🌱</div>
+                    <h4>Sustainability</h4>
+                    <p>Eco-friendly materials and ethical manufacturing practices</p>
+                </div>
+                <div class="value-card">
+                    <div class="icon">💎</div>
+                    <h4>Quality</h4>
+                    <p>Comfort and durability without compromise</p>
+                </div>
+                <div class="value-card">
+                    <div class="icon">🎨</div>
+                    <h4>Style</h4>
+                    <p>Trendy designs for every personality</p>
+                </div>
+                <div class="value-card">
+                    <div class="icon">💰</div>
+                    <h4>Affordability</h4>
+                    <p>Quality fashion at student-friendly prices</p>
+                </div>
+            </div>
+
+            <!-- Expression -->
+            <div class="story-section">
+                <h3>Express Yourself</h3>
+                <p>As a college guy, I know how important it is to express yourself with fashion. That's why we offer a wide range of styles and sizes to suit every personality and body type. Whether you're looking for casual streetwear or more formal attire, we've got you covered.</p>
+                <p>Fashion is personal. It's how we tell the world who we are before we even speak. At Phantom Clothing, we celebrate individuality and encourage everyone to find their unique style.</p>
+            </div>
+
+            <!-- Affordability -->
+            <div class="story-section">
+                <h3>Budget-Conscious Fashion</h3>
+                <p>Budget is also a great factor to consider when making fashion choices, and we strive to keep our prices affordable without compromising on quality. Being a student myself, I understand the financial constraints and the desire to look good without emptying your wallet.</p>
+                <p>We've streamlined our processes, cut out unnecessary middlemen, and focused on direct-to-consumer sales to bring you the best prices possible while maintaining the highest standards of quality and ethics.</p>
+            </div>
+
+            <!-- Closing Message -->
+            <div class="closing-section">
+                <h3>Join Our Movement</h3>
+                <p>Thank you for supporting Phantom Clothing and our mission to make fashion more sustainable and ethical. As a college guy, I'm proud to be part of a movement that values both style and responsibility.</p>
+                <p>Every purchase you make supports artisans, sustainable practices, and a vision of fashion that cares about people and the planet.</p>
+                <p class="signature">- Farhan, Founder of Phantom Clothing</p>
+                <a href="index.html" class="cta-button">EXPLORE OUR COLLECTION</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
