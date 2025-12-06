@@ -610,22 +610,22 @@
                 
                 <div class="summary-row">
                     <span>Subtotal:</span>
-                    <span id="subtotal">৳ 0</span>
+                    <span id="subtotal">$ 0</span>
                 </div>
                 
                 <div class="summary-row">
                     <span>Shipping:</span>
-                    <span id="shipping">৳ 100</span>
+                    <span id="shipping">$ 15</span>
                 </div>
                 
                 <div class="summary-row">
                     <span>Tax (5%):</span>
-                    <span id="tax">৳ 0</span>
+                    <span id="tax">$ 0</span>
                 </div>
                 
                 <div class="summary-row summary-total">
                     <span>Total:</span>
-                    <span id="total">৳ 0</span>
+                    <span id="total">$ 0</span>
                 </div>
 
                 <button class="checkout-btn" onclick="checkout()">PROCEED TO CHECKOUT</button>
@@ -732,10 +732,10 @@
             var tax = subtotal * 0.05;
             var total = subtotal + shipping + tax;
 
-            document.getElementById('subtotal').textContent = '৳ ' + subtotal.toLocaleString();
-            document.getElementById('shipping').textContent = '৳ ' + shipping;
-            document.getElementById('tax').textContent = '৳ ' + Math.round(tax).toLocaleString();
-            document.getElementById('total').textContent = '৳ ' + Math.round(total).toLocaleString();
+            document.getElementById('subtotal').textContent = '$ ' + subtotal.toLocaleString();
+            document.getElementById('shipping').textContent = '$ ' + shipping;
+            document.getElementById('tax').textContent = '$ ' + Math.round(tax).toLocaleString();
+            document.getElementById('total').textContent = '$ ' + Math.round(total).toLocaleString();
         }
 
         // Update cart count
