@@ -991,34 +991,36 @@
         var isSoundOn = false;
 
         function renderProducts(productArray, containerId) {
-            var container = document.getElementById(containerId);
-            container.innerHTML = '';
+    var container = document.getElementById(containerId);
+    container.innerHTML = '';
 
-            for (var i = 0; i < productArray.length; i++) {
-                var product = productArray[i];
-                var scarcityBadge = product.scarcity ?
-                    '<div class="scarcity-badge">' + product.scarcity + '</div>' : '';
+    for (var i = 0; i < productArray.length; i++) {
+        var product = productArray[i];
+        var scarcityBadge = product.scarcity ?
+            '<div class="scarcity-badge">' + product.scarcity + '</div>' : '';
 
-                var card = '<div class="product-card">' +
-                    '<div class="product-image-container">' +
-                    scarcityBadge +
-                    '<img src="' + product.image + '" alt="' + product.name + '" class="product-image">' +
-                    '</div>' +
-                    '<div class="product-info">' +
-                    '<div class="product-category">' + product.category + '</div>' +
-                    '<div class="product-name">' + product.name + '</div>' +
-                    '<div class="product-artisan">' + product.artisan + '</div>' +
-                    '<div class="product-price">' + product.price + '</div>' +
-                    '<div class="product-buttons">' +
-                    '<button class="add-to-cart" onclick="addToCart(' + product.id + ', event)">Add to Cart</button>' +
-                    '<button class="buy-now" onclick="buyNow(' + product.id + ', event)"><a href="/">Buy Now</a></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
+        var card = '<a href="product.html?id=' + product.id + '" style="text-decoration: none; color: inherit;">' +
+            '<div class="product-card">' +
+            '<div class="product-image-container">' +
+            scarcityBadge +
+            '<img src="' + product.image + '" alt="' + product.name + '" class="product-image">' +
+            '</div>' +
+            '<div class="product-info">' +
+            '<div class="product-category">' + product.category + '</div>' +
+            '<div class="product-name">' + product.name + '</div>' +
+            '<div class="product-artisan">' + product.artisan + '</div>' +
+            '<div class="product-price">' + product.price + '</div>' +
+            '<div class="product-buttons">' +
+            '<button class="add-to-cart" onclick="addToCart(' + product.id + ', event); event.preventDefault();">Add to Cart</button>' +
+            '<button class="buy-now" onclick="event.preventDefault(); window.location.href=\'product.html?id=' + product.id + '\'">View Details</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</a>';
 
-                container.innerHTML += card;
-            }
-        }
+        container.innerHTML += card;
+    }
+}
 
        function addToCart(productId, event) {
     // Find the product
@@ -1335,6 +1337,7 @@ window.addEventListener('load', function() {
 
 
 </html>
+
 
 
 
