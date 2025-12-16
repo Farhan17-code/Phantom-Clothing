@@ -139,7 +139,6 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--gold-dark);
             color: white;
             border-radius: 50%;
             width: 20px;
@@ -228,8 +227,25 @@
 
         .thumbnail-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .thumbnail-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .thumbnail-grid::-webkit-scrollbar-track {
+            background: rgba(24, 24, 24, 0.5);
+            border-radius: 3px;
+        }
+
+        .thumbnail-grid::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 3px;
         }
 
         .thumbnail {
@@ -455,6 +471,103 @@
             font-size: 1.5rem;
         }
 
+        /* Other Products Section */
+        .other-products-section {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 4rem 6rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 3rem;
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: rgba(24, 24, 24, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 40px rgba(212, 160, 23, 0.3);
+        }
+
+        .product-card-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-card-image {
+            transform: scale(1.1);
+        }
+
+        .product-card-content {
+            padding: 1.5rem;
+        }
+
+        .product-card-category {
+            color: #08c126;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-card-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .product-card-artisan {
+            font-size: 0.9rem;
+            color: #c70000;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .product-card-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+        }
+
         /* Flying bird animation */
         .flying-bird {
             position: fixed;
@@ -502,6 +615,14 @@
             .action-buttons {
                 flex-direction: column;
             }
+
+            .other-products-section {
+                padding: 0 2rem 4rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
         }
 
         @media (max-width: 768px) {
@@ -537,6 +658,14 @@
             .thumbnail-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -544,7 +673,7 @@
     <!-- Header -->
     <header>
         <a href="/" class="logo">
-            <div class="logo-icon"><img src="logo.png" alt="Phantom Clothing Logo" width="65"></div>
+            <div class="logo-icon"><img src="logo.png" alt="Phantom Wears Logo" width="65"></div>
             <div class="logo-text">Phantom Wears</div>
         </a>
         <nav>
@@ -642,20 +771,33 @@
         </div>
     </div>
 
+    <!-- Other Products Section -->
+    <div class="other-products-section">
+        <h2 class="section-title">You May Also Like</h2>
+        <div class="products-grid" id="otherProductsGrid">
+            <!-- Products will be dynamically added -->
+        </div>
+    </div>
+
     <script>
         var currentProduct = null;
         var selectedSize = 'L';
         var quantity = 1;
 
-        // All products database
+        // All products database with multiple images
         var allProducts = [
             {
                 id: 1,
                 name: 'Jack Overcoat',
                 category: 'Zibellino Cashmere',
                 price: '$ 19,400',
-                artisan: 'Imported from USA',
+                artisan: 'Imported From USA',
                 image: 'https://ogier1948.com/cdn/shop/files/DSC03233.jpg?crop=center&height=800&v=1761814965&width=800',
+                images: [
+                    'https://ogier1948.com/cdn/shop/files/DSC04543.jpg?crop=center&height=2000&v=1761814965&width=1500',
+                    'https://ogier1948.com/cdn/shop/files/DSC03233.jpg?crop=center&height=800&v=1761814965&width=800',
+                    'https://ogier1948.com/cdn/shop/files/DSC01468.jpg?crop=center&height=800&v=1761818472&width=800'
+                ],
                 scarcity: 'New In'
             },
             {
@@ -665,6 +807,11 @@
                 price: '$ 4,300',
                 artisan: 'Imported from USA',
                 image: 'https://ogier1948.com/cdn/shop/files/og-kayak-black-01.jpg?crop=center&height=800&v=1754648781&width=800',
+                images: [
+                    'https://ogier1948.com/cdn/shop/files/og-kayaknaturalwoolfleeceoutdoor-black-00.jpg?crop=center&height=2000&v=1757491592&width=1500',
+                    'https://ogier1948.com/cdn/shop/files/og-kayak-black-01.jpg?crop=center&height=800&v=1754648781&width=800',
+                    'https://ogier1948.com/cdn/shop/files/og-kayak-black-04.jpg?crop=center&height=2000&v=1757491592&width=1500'
+                ],
                 scarcity: 'New In'
             },
             {
@@ -674,24 +821,39 @@
                 price: '$ 3,400',
                 artisan: 'Imported from USA',
                 image: 'https://ogier1948.com/cdn/shop/files/og-naxos-jacket-beige-01.jpg?crop=center&height=800&v=1754649870&width=800',
+                images: [
+                    'https://ogier1948.com/cdn/shop/files/og-naxoswindstopperwool_beige_00.jpg?crop=center&height=2000&v=1757493760&width=1500',
+                    'https://ogier1948.com/cdn/shop/files/og-naxos-jacket-beige-02.jpg?crop=center&height=2000&v=1757493760&width=1500',
+                    'https://ogier1948.com/cdn/shop/files/og-paros-pant-navy-00.jpg?crop=center&height=800&v=1757494449&width=800'
+                ],
                 scarcity: 'New In'
             },
-            {
+            {  
                 id: 4,
                 name: 'Palm Wool Vest',
                 category: 'Superfine Wool',
                 price: '$ 4,200',
                 artisan: 'Imported From USA',
                 image: 'https://ogier1948.com/cdn/shop/files/og-palm-vest-beige-01.jpg?crop=center&height=800&v=1754650134&width=800',
+                images: [
+                    'https://ogier1948.com/cdn/shop/files/og-palmlightvestwool_beigewool_00.jpg?crop=center&height=2000&v=1757494177&width=1500',
+                    'https://ogier1948.com/cdn/shop/files/og-palm-vest-beige-02.jpg?crop=center&height=2000&v=1757494177&width=1500',
+                    'https://ogier1948.com/cdn/shop/files/og-cervo-pant-beige-00.jpg?crop=center&height=800&v=1757494564&width=800'
+                ],
                 scarcity: 'New In'
             },
             {
                 id: 5,
-                name: 'Otto Jacket',
-                category: 'Silk, Wool, Technical fabric',
-                price: '$ 4,400',
+                name: 'Figari Bomber',
+                category: 'Goatskin',
+                price: '$ 6,000',
                 artisan: 'Imported From USA',
-                image: 'https://ogier1948.com/cdn/shop/files/DSC04045.jpg?crop=center&height=800&v=1761831877&width=800',
+                image: 'https://ogier1948.com/cdn/shop/files/og-figari-navy-01.jpg?crop=center&height=800&v=1754648013&width=800',
+                images: [
+                    'https://ogier1948.com/cdn/shop/files/og-figari-navy-01.jpg?crop=center&height=800&v=1754648013&width=800',
+                    'https://ogier1948.com/cdn/shop/files/og-figari-navy-02.jpg?crop=center&height=800&v=1754648013&width=800',
+                    'https://ogier1948.com/cdn/shop/files/og-figari-navy-03.jpg?crop=center&height=800&v=1754648013&width=800'
+                ],
                 scarcity: 'New In'
             },
             {
@@ -701,60 +863,94 @@
                 price: '$ 6,000',
                 artisan: 'Imported From USA',
                 image: 'https://ogier1948.com/cdn/shop/files/og-figari-navy-01.jpg?crop=center&height=800&v=1754648013&width=800',
+                images: [
+                    'https://ogier1948.com/cdn/shop/files/og-figari-navy-01.jpg?crop=center&height=800&v=1754648013&width=800',
+                    'https://ogier1948.com/cdn/shop/files/og-figari-navy-02.jpg?crop=center&height=800&v=1754648013&width=800',
+                    'https://ogier1948.com/cdn/shop/files/og-figari-navy-03.jpg?crop=center&height=800&v=1754648013&width=800'
+                ],
                 scarcity: 'New In'
             },
             {
                 id: 7,
                 name: 'Dior Oblique Hooded Sweatshirt',
                 category: 'Beige Cotton-Blend Jersey',
-                price: '$ 1,150',
+                price: '$ 2,550',
                 artisan: 'Exclusivly From Dior',
                 image: 'https://assets.christiandior.com/is/image/diorprod/LOOK_H_25_1_LOOK_041_E07?$lookDefault_GH-GHC$&crop=568,0,1864,2000&wid=1024&hei=1107&scale=0.5535&bfc=on&qlt=85',
+                images: [
+                    'https://assets.christiandior.com/is/image/diorprod/513J626A0978C120_E01?$default_GHC$&crop=465,127,1072,1614&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/LOOK_H_25_1_LOOK_041_E07?$lookDefault_GH-GHC$&crop=568,0,1864,2000&wid=1024&hei=1107&scale=0.5535&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/513J626A0978C120_E08?$default_GHC$&crop=459,145,1084,1576&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                ],
                 scarcity: 'Only 7 left'
             },
             {
                 id: 8,
                 name: 'Dior Oblique Hooded Sweatshirt',
                 category: 'Black Cotton-Blend Jersey',
-                price: '$ 1,150',
+                price: '$ 2,550',
                 artisan: 'Exclusivly From Dior',
                 image: 'https://assets.christiandior.com/is/image/diorprod/513J626A0978C900_E01-4?$default_GHC$&crop=502,152,996,1471&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                images: [
+                    'https://assets.christiandior.com/is/image/diorprod/513J626A0978C900_E08-2?$default_GHC$&crop=479,152,1040,1474&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/513J626A0978C900_E01-4?$default_GHC$&crop=502,152,996,1471&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/LOOK_H_25_1_LOOK_231_E09?$lookDefault_GH-GHC$&crop=568,0,1864,2000&wid=1024&hei=1107&scale=0.5535&bfc=on&qlt=85'
+                ],
                 scarcity: 'Only 5 left'
             },
             {
                 id: 9,
                 name: 'Dior Oblique Hooded Sweatshirt',
                 category: 'Navy Blue Cotton-Blend Jersey',
-                price: '$ 1,150',
+                price: '$ 2,550',
                 artisan: 'Exclusivly From Dior',
                 image: 'https://assets.christiandior.com/is/image/diorprod/513J626A0978C540_E01?$default_GHC$&crop=487,149,1021,1479&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                images: [
+                    'https://assets.christiandior.com/is/image/diorprod/513J626A0978C540_E08?$default_GHC$&crop=480,150,1041,1479&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/513J626A0978C540_E01?$default_GHC$&crop=487,149,1021,1479&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85'
+                ],
                 scarcity: 'Only 3 left'
             },
             {
                 id: 10,
                 name: 'Dior Ribbon Overshirt',
                 category: 'Blue Cotton Twill',
-                price: '$ 1,050',
+                price: '$ 3,000',
                 artisan: 'Exclusivly From Dior',
                 image: 'https://assets.christiandior.com/is/image/diorprod/613D497A3037C585_E01?$default_GHC$&crop=391,156,1210,1610&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                images: [
+                    'https://assets.christiandior.com/is/image/diorprod/LOOK_H_26_1_LOOK_016_E37-1?$lookDefault_GH-GHC$&crop=568,0,1858,2000&wid=1024&hei=1107&scale=0.5535&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/613D497A3037C585_E01?$default_GHC$&crop=391,156,1210,1610&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/LOOK_H_26_1_LOOK_016_E36-1?$lookDefault_GH-GHC$&crop=568,0,1863,2000&wid=1024&hei=1107&scale=0.5535&bfc=on&qlt=85'
+                ],
                 scarcity: 'Only 4 left'
             },
             {
                 id: 11,
                 name: 'Cannage Overshirt with Christian Dior Couture Embroidery',
                 category: 'Gray Cotton Flannel',
-                price: '$ 1,080',
+                price: '$ 3,300',
                 artisan: 'Exclusivly From Dior',
                 image: 'https://assets.christiandior.com/is/image/diorprod/313C509F3088C978_E01-4?$default_GHC$&crop=453,150,1095,1458&wid=1536&hei=1661&scale=0.7265&bfc=on&qlt=85',
+                images: [
+                    'https://assets.christiandior.com/is/image/diorprod/313C509F3088C978_E08-5?$default_GHC$&crop=450,150,1100,1460&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/313C509F3088C978_E01-4?$default_GHC$&crop=453,150,1095,1458&wid=1536&hei=1661&scale=0.7265&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/LOOK_H_26_1_LOOK_023_E04?$lookDefault_GH-GHC$&crop=568,0,1864,2000&wid=1024&hei=1107&scale=0.5535&bfc=on&qlt=85'
+                ],
                 scarcity: 'Only 6 left'
             },
             {
                 id: 12,
                 name: 'Dior Ribbon T-Shirt, Regular Fit',
                 category: 'Deep Gray Cotton Jersey',
-                price: '$ 960',
+                price: '$ 1,000',
                 artisan: 'Exclusivly From Dior',
                 image: 'https://assets.christiandior.com/is/image/diorprod/613J668A0677C889_E01?$default_GHC$&crop=455,150,1090,1350&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                images: [
+                    'https://assets.christiandior.com/is/image/diorprod/613J668A0677C889_E08?$default_GHC$&crop=468,150,1067,1349&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/613J668A0677C889_E01?$default_GHC$&crop=455,150,1090,1350&wid=1024&hei=1107&scale=0.4843&bfc=on&qlt=85',
+                    'https://assets.christiandior.com/is/image/diorprod/LOOK_H_26_1_LOOK_018_E10?$lookDefault_GH-GHC$&crop=572,0,1860,2000&wid=1024&hei=1107&scale=0.5535&bfc=on&qlt=85'
+                ],
                 scarcity: 'Only 8 left'
             }
         ];
@@ -785,23 +981,60 @@
             // Update page title
             document.title = currentProduct.name + ' | Phantom Clothing';
 
-            // Create thumbnails (using same image for demo)
+            // Create thumbnails from product images
             var thumbnailGrid = document.getElementById('thumbnailGrid');
             thumbnailGrid.innerHTML = '';
-            for (var i = 0; i < 4; i++) {
-                var thumb = document.createElement('div');
-                thumb.className = 'thumbnail' + (i === 0 ? ' active' : '');
-                thumb.innerHTML = '<img src="' + currentProduct.image + '" alt="View ' + (i + 1) + '">';
-                thumb.onclick = function() {
-                    document.querySelectorAll('.thumbnail').forEach(function(t) {
-                        t.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                };
-                thumbnailGrid.appendChild(thumb);
+            
+            var productImages = currentProduct.images || [currentProduct.image];
+            
+            for (var i = 0; i < productImages.length; i++) {
+                (function(index) {
+                    var thumb = document.createElement('div');
+                    thumb.className = 'thumbnail' + (index === 0 ? ' active' : '');
+                    thumb.innerHTML = '<img src="' + productImages[index] + '" alt="View ' + (index + 1) + '">';
+                    thumb.onclick = function() {
+                        document.getElementById('mainImage').src = productImages[index];
+                        document.querySelectorAll('.thumbnail').forEach(function(t) {
+                            t.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    };
+                    thumbnailGrid.appendChild(thumb);
+                })(i);
             }
 
             updateCartCount();
+            loadOtherProducts();
+        }
+
+        // Load other products (excluding current)
+        function loadOtherProducts() {
+            var otherProductsGrid = document.getElementById('otherProductsGrid');
+            otherProductsGrid.innerHTML = '';
+            
+            var otherProducts = allProducts.filter(function(p) {
+                return p.id !== currentProduct.id;
+            });
+            
+            // Shuffle and take first 4 products
+            otherProducts.sort(function() { return 0.5 - Math.random(); });
+            var displayProducts = otherProducts.slice(0, 4);
+            
+            displayProducts.forEach(function(product) {
+                var card = document.createElement('a');
+                card.href = 'product.html?id=' + product.id;
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-card-image">
+                    <div class="product-card-content">
+                        <div class="product-card-category">${product.category}</div>
+                        <div class="product-card-name">${product.name}</div>
+                        <div class="product-card-artisan">${product.artisan}</div>
+                        <div class="product-card-price">${product.price}</div>
+                    </div>
+                `;
+                otherProductsGrid.appendChild(card);
+            });
         }
 
         // Size selection
@@ -817,7 +1050,7 @@
         function changeQuantity(change) {
             quantity += change;
             if (quantity < 1) quantity = 1;
-            if (quantity > 5) quantity = 5;
+            if (quantity > 10) quantity = 10;
             document.getElementById('quantity').textContent = quantity;
         }
 
@@ -867,7 +1100,6 @@
 
             alert('Added to cart!\n\nSize: ' + selectedSize + '\nQuantity: ' + quantity);
             
-            // Reset quantity
             quantity = 1;
             document.getElementById('quantity').textContent = quantity;
         }
@@ -915,6 +1147,4 @@
         });
     </script>
 </body>
-
-</html>
-
+</html>    
