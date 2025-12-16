@@ -979,7 +979,7 @@
             document.getElementById('mainImage').alt = currentProduct.name;
 
             // Update page title
-            document.title = currentProduct.name + ' | Phantom Clothing';
+            document.title = currentProduct.name + ' | Phantom Wears';
 
             // Create thumbnails from product images
             var thumbnailGrid = document.getElementById('thumbnailGrid');
@@ -1102,14 +1102,6 @@
             
             quantity = 1;
             document.getElementById('quantity').textContent = quantity;
-        }
-
-        // Buy now
-        function buyNow() {
-            addToCart();
-            setTimeout(function() {
-                window.location.href = 'cart.html';
-            }, 800);
         }
 
         // Update cart count
