@@ -978,7 +978,7 @@
         var scarcityBadge = product.scarcity ?
             '<div class="scarcity-badge">' + product.scarcity + '</div>' : '';
 
-        var card = '<a href="product.html?id=' + product.id + '" style="text-decoration: none; color: inherit;">' +
+        var card = '<a href="product2.html?id=' + product.id + '" style="text-decoration: none; color: inherit;">' +
             '<div class="product-card">' +
             '<div class="product-image-container">' +
             scarcityBadge +
@@ -991,7 +991,7 @@
             '<div class="product-price">' + product.price + '</div>' +
             '<div class="product-buttons">' +
             '<button class="add-to-cart" onclick="addToCart(' + product.id + ', event); event.preventDefault();">Add to Cart</button>' +
-            '<button class="buy-now" onclick="event.preventDefault(); window.location.href=\'product.html?id=' + product.id + '\'">Buy Now</button>' +
+            '<button class="buy-now" onclick="event.preventDefault(); window.location.href=\'product2.html?id=' + product.id + '\'">Buy Now</button>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -1313,6 +1313,7 @@ window.addEventListener('load', function() {
         });
     </script>
 </body>
+
 
 
 </html>
