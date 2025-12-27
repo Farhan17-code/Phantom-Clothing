@@ -672,14 +672,14 @@
 <body>
     <!-- Header -->
     <header>
-        <a href="/" class="logo">
+        <a href="index.html" class="logo">
             <div class="logo-icon"><img src="logo.png" alt="Phantom Wears Logo" width="65"></div>
             <div class="logo-text">Phantom Wears</div>
         </a>
         <nav>
-            <a href="/">Home</a>
-            <a href="/#shop">Shop</a>
-            <a href="/#new">New Arrivals</a>
+            <a href="index.html">Home</a>
+            <a href="index.html#shop">Shop</a>
+            <a href="index.html#new">New Arrivals</a>
             <a href="story.html">Story</a>
         </nav>
         <a href="cart.html" class="cart-icon">
@@ -690,7 +690,7 @@
 
     <!-- Breadcrumb -->
     <div class="breadcrumb">
-        <a href="/">Home</a> / <a href="/#shop">Shop</a> / <span id="breadcrumbProduct">Product</span>
+        <a href="index.html">Home</a> / <a href="index.html#shop">Shop</a> / <span id="breadcrumbProduct">Product</span>
     </div>
 
     <!-- Product Container -->
@@ -756,7 +756,7 @@
                 </div>
                 <div class="feature-item">
                     <span class="feature-icon">✓</span>
-                    <span>Free Shipping on Orders Over $100</span>
+                    <span>Free Shipping on Orders Over $2000</span>
                 </div>
                 <div class="feature-item">
                     <span class="feature-icon">✓</span>
@@ -1103,6 +1103,40 @@
             document.getElementById('quantity').textContent = quantity;
         }
 
+        // Buy Now - Navigate to checkout
+        function buyNow() {
+            if (!currentProduct) return;
+
+            var cart = JSON.parse(localStorage.getItem('phantomCart') || '[]');
+            
+            var existingIndex = -1;
+            cart.forEach(function(item, index) {
+                if (item.id === currentProduct.id && item.size === selectedSize) {
+                    existingIndex = index;
+                }
+            });
+            
+            if (existingIndex >= 0) {
+                cart[existingIndex].quantity += quantity;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    category: currentProduct.category,
+                    price: currentProduct.price,
+                    artisan: currentProduct.artisan,
+                    image: currentProduct.image,
+                    size: selectedSize,
+                    quantity: quantity
+                });
+            }
+            
+            localStorage.setItem('phantomCart', JSON.stringify(cart));
+            
+            // Redirect to checkout page
+            window.location.href = 'cheakout.html';
+        }
+
         // Update cart count
         function updateCartCount() {
             var cart = JSON.parse(localStorage.getItem('phantomCart') || '[]');
@@ -1138,6 +1172,4 @@
         });
     </script>
 </body>
-</html>    
-
-
+</html>
